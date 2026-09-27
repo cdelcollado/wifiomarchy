@@ -111,6 +111,9 @@ Panel {
     next[ssid] = true
     hiddenNetworks = next
     persistHidden()
+    // Re-filter the visible list immediately so the row disappears without a
+    // close/reopen. The cursor clamps itself via onWifiNetworksChanged.
+    syncWifiNetworks()
   }
 
   function unhideNetwork(ssid) {
@@ -119,6 +122,7 @@ Panel {
     for (var k in hiddenNetworks) if (k !== ssid) next[k] = hiddenNetworks[k]
     hiddenNetworks = next
     persistHidden()
+    syncWifiNetworks()
   }
 
   // Hidden SSIDs flattened and sorted for the "HIDDEN" section at the bottom.
