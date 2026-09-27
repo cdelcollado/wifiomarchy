@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "cdelcollado.network",
+  "name": "Network (hide networks)",
+  "version": "1.0.0",
+  "author": "cdelcollado",
+  "license": "MIT",
+  "description": "Omarchy Wi-Fi bar widget with the ability to hide unwanted networks from scans.",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "Panel.qml"
+  },
+  "barWidget": {
+    "displayName": "Network",
+    "description": "Wi-Fi list and connection state with hide-from-scan.",
+    "category": "Network",
+    "allowMultiple": false
+  }
+}
