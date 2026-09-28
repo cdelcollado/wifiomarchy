@@ -9,6 +9,10 @@ neighbours. With this plugin you can mark any network as *hidden*, and it will
 never appear in a scan again — while the network you're currently connected to
 always stays visible.
 
+## Screenshot
+
+![Wi-Fi panel with the ability to hide networks](preview.png)
+
 ## Features
 
 - Connect / disconnect / forget networks (everything the stock widget does).
