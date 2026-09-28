@@ -106,6 +106,14 @@ Panel {
 
   function hideNetwork(ssid) {
     if (!ssid || isHiddenNetwork(ssid)) return
+    var network = networkForSsid(ssid)
+    // A saved (known) network has a NetworkManager profile behind it, so
+    // hiding it has to forget that profile too -- otherwise it would keep
+    // auto-connecting and resurface as "Connected" the moment it does. It is
+    // already hidden by the time the forget lands, so it never flashes back
+    // under "OTHER NETWORKS". Fire-and-forget: if the forget fails the network
+    // stays hidden regardless, and can be unhidden and re-hidden to retry.
+    if (network && network.known && !network.connected) network.forget()
     var next = {}
     for (var k in hiddenNetworks) next[k] = hiddenNetworks[k]
     next[ssid] = true
@@ -671,9 +679,10 @@ Panel {
       checkActionCompletion(network)
       var row = Model.wifiRow(network)
       if (row) {
-        // Drop hidden networks from the scan, but never the one we're on or
-        // ones we've saved — hiding is for the neighbours' "other" networks.
-        if (!row.connected && !row.known && isHiddenNetwork(row.ssid)) continue
+        // Drop hidden networks from the scan, but never the one we're on.
+        // Saved (known) networks can be hidden too; hiding one forgets its
+        // profile first, so it won't auto-connect back into view.
+        if (!row.connected && isHiddenNetwork(row.ssid)) continue
         nets.push(row)
       }
     }
@@ -1802,7 +1811,7 @@ Panel {
     readonly property bool isSelected: root.focusSection === "wifi" && root.selectedIndex === index
     readonly property bool forgetFocused: isSelected && root.wifiActionFocused && canForget
     readonly property bool forgetVisible: canForget && (!requiresCredentials || forgetFocused || rightMouse.containsMouse)
-    readonly property bool hideAvailable: !isConnected && !isKnown
+    readonly property bool hideAvailable: !isConnected
     readonly property bool showHideButton: hideAvailable && rowMouse.containsMouse
 
     hasCursor: root.cursorActive && isSelected && !root.wifiActionFocused
@@ -1970,10 +1979,10 @@ Panel {
         }
       }
 
-      // Hide a neighbour's network from the scan. Only offered for networks we
-      // don't know (the "other networks" section) — known networks are
-      // "forgotten" instead. Sits left of the lock/forget action so the two
-      // never overlap.
+      // Hide a network from the scan. For a neighbour's unknown network this
+      // is purely cosmetic; for a saved (known) network it also forgets the
+      // profile so it stops auto-connecting. Sits left of the lock/forget
+      // action so the two never overlap.
       PanelActionButton {
         id: hideBtn
         anchors.right: rightAction.visible ? rightAction.left : parent.right
@@ -1981,7 +1990,7 @@ Panel {
         anchors.verticalCenter: parent.verticalCenter
         visible: row.showHideButton
         iconText: "󰈉"
-        tooltipText: "Hide network"
+        tooltipText: row.isKnown ? "Forget & hide" : "Hide network"
         foreground: root.bar.foreground
         hoverColor: root.bar.foreground
         fontFamily: root.bar.fontFamily

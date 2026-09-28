@@ -5,14 +5,16 @@ An [Omarchy](https://omarchy.org/) Wi-Fi bar widget — a fork of the built-in
 scanning**.
 
 Living in an apartment, a Wi-Fi scan can list every network belonging to your
-neighbours. With this plugin you can mark any unknown network as *hidden*, and
-it will never appear in a scan again — while your own connected and saved
-networks are always shown.
+neighbours. With this plugin you can mark any network as *hidden*, and it will
+never appear in a scan again — while the network you're currently connected to
+always stays visible.
 
 ## Features
 
 - Connect / disconnect / forget networks (everything the stock widget does).
-- **Hide** any unknown network from future scans (eye-off button).
+- **Hide** any network from future scans (eye-off button).
+- **Hide a saved network** (one you've connected to before): its profile is
+  forgotten too, so it stops auto-connecting and disappears from the list.
 - A **HIDDEN** section at the bottom of the panel lists hidden networks, so a
   mistaken hide can be undone with one click (eye button). It's collapsed by
   default — click the header to expand it.
@@ -49,10 +51,14 @@ omarchy plugin enable cdelcollado.network
 
 1. Click the Network icon in the bar.
 2. Let it scan (or keep the panel open — it rescans automatically).
-3. Hover a network under **OTHER NETWORKS** and click the eye-off button
-   (`󰈉`, tooltip "Hide network").
+3. Hover a network and click the eye-off button (`󰈉`):
+   - under **OTHER NETWORKS**, the tooltip reads "Hide network" and the network
+     is simply hidden from scans;
+   - under **KNOWN NETWORKS**, the tooltip reads "Forget & hide" — the saved
+     profile is forgotten too, so it stops auto-connecting.
 4. To restore a network, open the **HIDDEN** section at the bottom and click
-   the eye button (`󰈈`, tooltip "Show again").
+   the eye button (`󰈈`, tooltip "Show again"). A network hidden while saved
+   comes back as an available network, without its saved credentials.
 
 ## Development
 
