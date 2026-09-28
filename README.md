@@ -33,6 +33,11 @@ commands, which ship with every Omarchy install:
 
 - `omarchy-network-status` — connection details and throughput.
 - `omarchy-network-band` — Wi-Fi band selection.
+- `omarchy-dns` — DNS provider switching.
+- `omarchy-launch-floating-terminal-with-presentation` — opens the custom DNS editor.
+
+The QR-code and speed-test buttons summon the first-party `omarchy.wifiqr` and
+`omarchy.speedtest` plugins when they are enabled.
 
 No other dependencies.
 
@@ -50,6 +55,16 @@ omarchy plugin enable cdelcollado.network
 
 **Note:** `allowMultiple` is `false`, so make sure the built-in
 `omarchy.network` is disabled if you have both installed.
+
+## Remove
+
+```bash
+omarchy plugin remove cdelcollado.network
+```
+
+The list of hidden networks lives in
+`~/.local/state/omarchy/wifi-hidden-networks.json`; delete that file too if you
+want to clear your hidden list.
 
 ## Usage
 
