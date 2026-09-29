@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "cdelcollado.network",
   "name": "Network (hide networks)",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "cdelcollado",
   "license": "MIT",
   "description": "Omarchy Wi-Fi bar widget with the ability to hide unwanted networks from scans.",

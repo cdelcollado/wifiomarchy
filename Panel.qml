@@ -1667,12 +1667,25 @@ Panel {
           }
         }
 
-        Repeater {
+        // Scrollable hidden list — same capped-height + scrollbar pattern as
+        // the network list above, so a long hidden list never pushes the
+        // popup off-screen on small displays.
+        ListView {
+          id: hiddenListView
+          visible: root.hiddenExpanded
+          width: parent.width
+          height: Math.min(contentHeight, Style.space(240))
+          spacing: Style.space(6)
+          clip: true
+          boundsBehavior: Flickable.StopAtBounds
+          interactive: contentHeight > height
+          ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
           model: root.hiddenExpanded ? root.hiddenRows : []
+
           delegate: Item {
             required property var modelData
             required property int index
-            width: hiddenList.width
+            width: ListView.view.width
             height: hiddenRowContent.implicitHeight + Style.spacing.rowPaddingX
 
             Item {

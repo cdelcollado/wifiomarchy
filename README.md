@@ -22,6 +22,9 @@ always stays visible.
 - A **HIDDEN** section at the bottom of the panel lists hidden networks, so a
   mistaken hide can be undone with one click (eye button). It's collapsed by
   default — click the header to expand it.
+- The hidden list **scrolls** when it grows past the panel's height, so a long
+  list of hidden networks stays reachable on small screens instead of
+  overflowing off-screen.
 - Hidden networks are persisted in
   `~/.local/state/omarchy/wifi-hidden-networks.json` and survive shell
   restarts and `omarchy update`.
